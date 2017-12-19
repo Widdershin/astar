@@ -1,0 +1,10 @@
+
+As a user, I want to be able to track the work I need to do, and to have the system automatically figure out how I need to order my dependencies.
+
+Concepts:
+
+Task - something you need to do
+
+Tasks have a description, dependents and dependencies.
+Users can create them, and link them.
+They also have a completion boolean, and an archived boolean.

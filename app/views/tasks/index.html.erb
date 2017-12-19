@@ -1,0 +1,25 @@
+<h1>Tasks</h1>
+
+<h2>Add new</h2>
+
+<%= form_for(Task.new) do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+
+  <div>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+
+  <%= f.submit %>
+<% end %>
+
+<ul>
+  <% Task.all.each do |task| %>
+    <li>
+      <%= link_to(task.name, task) %>
+    </li>
+  <% end %>
+</ul>

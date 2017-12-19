@@ -1,0 +1,6 @@
+<div class="task">
+  <h3><%= link_to_unless_current("##{task.id}", task) %> <%= link_to_unless_current(task.name, task) %></h3>
+  <p><%= task.description %></p>
+
+  <%= task.completed ? "Completed" : "Todo" %>
+</div>

@@ -1,0 +1,11 @@
+<%= link_to 'Back to tasks list', tasks_path %>
+
+<%= render task %>
+
+<h2>Dependencies</h2>
+
+<%= render task.dependency_tasks %>
+
+<h2>Dependents</h2>
+
+<%= render task.dependent_tasks %>
