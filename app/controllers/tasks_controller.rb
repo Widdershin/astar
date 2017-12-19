@@ -16,7 +16,7 @@ class TasksController < ApplicationController
   def complete
     task.update!(:completed => !task.completed)
 
-    redirect_to(task)
+    redirect_back(fallback_location: task_path(task))
   end
 
   def search

@@ -22,4 +22,12 @@ class Task < ApplicationRecord
     # find the leaf node of the dependencies
     dependency_tasks.incomplete.find_yield { |task| task.next_task } || self
   end
+
+  def dependency_count
+    if dependency_tasks.incomplete.empty?
+      0
+    else
+      1 + dependency_tasks.incomplete.sum(&:dependency_count)
+    end
+  end
 end
