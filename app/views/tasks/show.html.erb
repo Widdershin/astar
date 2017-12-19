@@ -4,6 +4,89 @@
 
 <h2>Dependencies</h2>
 
+<div>Add new dependency</div>
+<div><input id="search"></input></div>
+<div id="results"></div>
+
+<script type="text/javascript">
+
+function debounced(f, period) {
+  let lastTime = -Infinity;
+  let timeoutId;
+
+  return function() {
+    const now = performance.now();
+    const difference = now - lastTime;
+
+    if (difference > period) {
+      f.apply(null, arguments);
+    } else {
+      clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(function() {
+        f.apply(null, arguments);
+
+        lastTime = now;
+      }, period);
+    }
+
+    lastTime = now;
+  }
+}
+
+const resolved_task_id = <%= task.id %>;
+
+window.search.addEventListener('input', debounced(function (ev) {
+  if (window.search.value === '') {
+    window.results.innerHTML = '';
+    return
+  };
+
+  const request = fetch('/tasks/search?q=' + window.search.value);
+
+  request.then(response => response.json()).then(function(results) {
+    window.results.innerHTML = '';
+
+    results.forEach(function (result) {
+      const div = document.createElement('div');
+      const task = document.createElement('task');
+      const button = document.createElement('button');
+
+      button.innerHTML = 'Add as dependency';
+
+      task.innerHTML = result.html;
+      div.appendChild(task);
+      div.appendChild(button);
+
+      button.addEventListener('click', function () {
+        const headers = new Headers();
+
+        headers.append("X-CSRF-Token", "<%= form_authenticity_token %>");
+
+        const request = fetch("/dependencies", {
+          method: "POST",
+          body: JSON.stringify({
+            dependency: {
+              resolved_task_id,
+              dependent_task_id: JSON.parse(result.json).id
+            }
+          }),
+          headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-Token': "<%= form_authenticity_token %>",
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+          },
+          credentials: 'same-origin'
+        });
+      });
+
+      window.results.appendChild(div);
+    });
+  });
+}, 150));
+</script>
+
 <%= render task.dependency_tasks %>
 
 <h2>Dependents</h2>

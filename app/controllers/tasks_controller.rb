@@ -13,6 +13,16 @@ class TasksController < ApplicationController
     redirect_to(task)
   end
 
+  def search
+    query = "%#{params[:q]}%"
+    name = Task.arel_table[:name]
+    description = Task.arel_table[:description]
+
+    tasks = Task.where(name.matches(query)).or(Task.where(description.matches(query)))
+
+    render json: tasks.map { |task| {html: render_to_string(task), json: render_to_string(json: task)} }
+  end
+
   private
 
   def task_params
