@@ -1,25 +1,42 @@
-<h1>Tasks</h1>
+<div class="flex">
+  <div class="tasks">
+    <h1>Tasks</h1>
 
-<h2>Add new</h2>
+    <h2>Add new</h2>
+    <%= form_for(Task.new) do |f| %>
+      <div>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
 
-<%= form_for(Task.new) do |f| %>
-  <div>
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+      <div>
+        <%= f.label :description %>
+        <%= f.text_area :description %>
+      </div>
+
+      <%= f.submit %>
+    <% end %>
+
+    <ul>
+      <% Task.all.each do |task| %>
+        <li>
+          <%= link_to(task.name, task) %>
+        </li>
+      <% end %>
+    </ul>
   </div>
 
-  <div>
-    <%= f.label :description %>
-    <%= f.text_area :description %>
+  <div class="goals">
+    <h1>Goals</h1>
+
+    <ul>
+      <% Goal.all.each do |goal| %>
+        <li>
+          <%= render goal.task %>
+          <h3>Next Step</h3>
+          <%= render goal.task.next_task %>
+        </li>
+      <% end %>
+    </ul>
   </div>
-
-  <%= f.submit %>
-<% end %>
-
-<ul>
-  <% Task.all.each do |task| %>
-    <li>
-      <%= link_to(task.name, task) %>
-    </li>
-  <% end %>
-</ul>
+</div>

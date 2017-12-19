@@ -2,6 +2,8 @@
 
 <%= render task %>
 
+<%= link_to('Create Goal', goals_path({task_id: task.id}), method: :POST) %>
+
 <h2>Dependencies</h2>
 
 <div>Add new dependency</div>
