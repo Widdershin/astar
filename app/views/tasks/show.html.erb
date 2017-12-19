@@ -2,6 +2,7 @@
 
 <%= render task %>
 
+<%= link_to(task.completed ? 'Mark as incomplete' : 'Mark as completed', complete_task_path(task), method: :POST) %>
 <%= link_to('Create Goal', goals_path({task_id: task.id}), method: :POST) %>
 
 <h2>Dependencies</h2>

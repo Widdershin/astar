@@ -13,6 +13,12 @@ class TasksController < ApplicationController
     redirect_to(task)
   end
 
+  def complete
+    task.update!(:completed => !task.completed)
+
+    redirect_to(task)
+  end
+
   def search
     query = "%#{params[:q]}%"
     name = Task.arel_table[:name]
