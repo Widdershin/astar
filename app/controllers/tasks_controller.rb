@@ -7,6 +7,15 @@ class TasksController < ApplicationController
   def show
   end
 
+  def edit
+  end
+
+  def update
+    task.update!(task_params)
+
+    redirect_to(task)
+  end
+
   def create
     task = Task.create!(task_params)
 
@@ -32,6 +41,6 @@ class TasksController < ApplicationController
   private
 
   def task_params
-    params.require(:task).permit(:name, :description)
+    params.require(:task).permit(:name, :description, :completed, :archived)
   end
 end

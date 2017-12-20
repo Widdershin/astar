@@ -23,6 +23,17 @@ class Task < ApplicationRecord
     dependency_tasks.incomplete.find_yield { |task| task.next_task } || self
   end
 
+  def next_tasks
+    # find the leaf node of the dependencies
+    result = dependency_tasks.incomplete.flat_map { |task| task.next_tasks } || self
+
+    if result.length > 0
+      result
+    else
+      [self]
+    end
+  end
+
   def dependency_count
     if dependency_tasks.incomplete.empty?
       0

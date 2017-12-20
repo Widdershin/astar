@@ -31,11 +31,11 @@
 
     <ul>
       <% Goal.all.each do |goal| %>
-        <li>
+        <div>
           <%= render goal.task %>
-          <h3>Next Step</h3>
-          <%= render goal.task.next_task %>
-        </li>
+          <h3>Next Steps</h3>
+          <%= render goal.task.next_tasks %>
+        </div>
       <% end %>
     </ul>
   </div>

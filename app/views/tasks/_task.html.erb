@@ -1,9 +1,10 @@
 <div class="task">
-  <h3><%= link_to_unless_current("##{task.id}", task) %> <%= link_to_unless_current(task.name, task) %></h3>
+  <h3 class="title"><%= link_to_unless_current("##{task.id}", task) %> <%= link_to_unless_current(task.name, task) %></h3>
   <p><%= task.description %></p>
 
   <div><%= task.completed ? "Completed" : "Todo" %></div>
 
+<%= link_to('Edit Task', edit_task_path(task)) %>
   <% if task.dependency_tasks.incomplete.empty? %>
     <%= link_to(task.completed ? 'Mark as incomplete' : 'Mark as completed', complete_task_path(task), method: :POST) %>
   <% else %>
