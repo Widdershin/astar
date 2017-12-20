@@ -80,6 +80,8 @@ window.search.addEventListener('input', debounced(function (ev) {
           },
           credentials: 'same-origin'
         });
+
+        request.then(() => location.reload());
       });
 
       window.results.appendChild(div);

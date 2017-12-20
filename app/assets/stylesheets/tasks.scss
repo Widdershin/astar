@@ -9,9 +9,15 @@ html, body {
   font-weight: thin;
 }
 
+header {
+  background: #333;
+  color: white;
+  padding: 10px;
+}
+
 .task {
   border: 1px solid #DDD;
-  width: 500px;
+  width: 300px;
   padding: 10px;
   background: #F8F8F8;
   margin: 5px;

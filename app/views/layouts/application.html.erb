@@ -9,6 +9,16 @@
   </head>
 
   <body>
+    <header>
+      <span><b>Lodestar</b></span>
+      <% if signed_in? %>
+        <span style="float: right;"> Signed in as <%= current_user.email %>
+      <% end %>
+    </header>
+
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
     <%= yield %>
   </body>
 </html>
