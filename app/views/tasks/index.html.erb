@@ -29,10 +29,10 @@
   <div class="goals">
     <h1>Goals</h1>
 
-    <div>
+    <div class="goals-inner">
       <% Goal.all.each do |goal| %>
-        <div>
-          <%= render goal.task %>
+        <div class="goal">
+          <%= render goal.task, {locals: {feature: true}} %>
           <h3>Next Steps</h3>
           <%= render goal.task.next_tasks %>
         </div>
