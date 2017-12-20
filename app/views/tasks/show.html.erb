@@ -45,6 +45,7 @@ window.search.addEventListener('input', debounced(function (ev) {
 
   const request = fetch('/tasks/search?q=' + window.search.value);
 
+  // TODO - fix this shit
   request.then(response => response.json()).then(function(results) {
     window.results.innerHTML = '';
 
