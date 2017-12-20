@@ -6,12 +6,12 @@
     <%= form_for(Task.new) do |f| %>
       <div>
         <%= f.label :name %>
-        <%= f.text_field :name %>
+        <div><%= f.text_field :name %></div>
       </div>
 
       <div>
         <%= f.label :description %>
-        <%= f.text_area :description %>
+        <div><%= f.text_area :description, rows: 4, cols: 40 %></div>
       </div>
 
       <%= f.submit %>
@@ -29,7 +29,7 @@
   <div class="goals">
     <h1>Goals</h1>
 
-    <ul>
+    <div>
       <% Goal.all.each do |goal| %>
         <div>
           <%= render goal.task %>
@@ -37,6 +37,6 @@
           <%= render goal.task.next_tasks %>
         </div>
       <% end %>
-    </ul>
+    </div>
   </div>
 </div>
