@@ -33,7 +33,10 @@ class TasksController < ApplicationController
     name = Task.arel_table[:name]
     description = Task.arel_table[:description]
 
-    tasks = Task.incomplete.where(name.matches(query)).or(Task.where(description.matches(query)))
+    tasks = Task
+      .active
+      .where(name.matches(query))
+      .or(Task.where(description.matches(query)))
 
     render json: tasks.map { |task| {html: render_to_string(task), json: render_to_string(json: task)} }
   end

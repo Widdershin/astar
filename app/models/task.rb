@@ -18,14 +18,16 @@ class Task < ApplicationRecord
   scope :complete, -> { where(:completed => true) }
   scope :incomplete, -> { where(:completed => false) }
 
+  scope :active, -> { incomplete.where(:archived => false) }
+
   def next_task
     # find the leaf node of the dependencies
-    dependency_tasks.incomplete.find_yield { |task| task.next_task } || self
+    dependency_tasks.active.find_yield { |task| task.next_task } || self
   end
 
   def next_tasks
     # find the leaf node of the dependencies
-    result = dependency_tasks.incomplete.flat_map { |task| task.next_tasks } || self
+    result = dependency_tasks.active.flat_map { |task| task.next_tasks } || self
 
     if result.length > 0
       result
