@@ -1,0 +1,5 @@
+<div class="goal">
+  <%= render goal.task, {locals: {feature: true}} %>
+  <h3>Next Steps</h3>
+  <%= render goal.task.next_tasks %>
+</div>

@@ -1,0 +1,62 @@
+<div class="project-show">
+  <div class="controls">
+  <h1><%= project.name %></h1>
+    <h2>Goals</h2>
+
+    <h3>Add new goal</h2>
+    <div><input id="search"></input></div>
+    <div id="results"></div>
+
+    <script type="text/javascript">
+      window.search.addEventListener('input', debounced(function (ev) {
+        const request = fetchingHTML('/tasks/search?q=' + window.search.value);
+
+        request.then(response => response.json()).then(function(results) {
+          window.results.innerHTML = '';
+
+          results.forEach(function (result) {
+            const div = document.createElement('div');
+            const task = document.createElement('task');
+            const button = document.createElement('button');
+
+            button.innerHTML = 'Create as goal';
+
+            task.innerHTML = result.html;
+            div.appendChild(task);
+            div.appendChild(button);
+
+            window.results.appendChild(div);
+
+            button.addEventListener('click', function (ev) {
+              fetching("<%= project_goals_path(project) %>", {
+                method: 'POST',
+                body: JSON.stringify({
+                  task_id: JSON.parse(result.json).id
+                })
+              }).then(() => location.reload());
+            });
+          })
+        });
+      }));
+    </script>
+
+    <h2>Add new Task</h2>
+    <%= form_for(Task.new) do |f| %>
+      <div>
+        <%= f.label :name %>
+        <div><%= f.text_field :name %></div>
+      </div>
+
+      <div>
+        <%= f.label :description %>
+        <div><%= f.text_area :description, rows: 4, cols: 40 %></div>
+      </div>
+
+      <%= f.submit %>
+    <% end %>
+  </div>
+
+  <div class="goals-inner">
+    <%= render project.goals %>
+  </div>
+</div>

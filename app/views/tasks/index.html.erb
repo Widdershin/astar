@@ -30,13 +30,7 @@
     <h1>Goals</h1>
 
     <div class="goals-inner">
-      <% Goal.all.each do |goal| %>
-        <div class="goal">
-          <%= render goal.task, {locals: {feature: true}} %>
-          <h3>Next Steps</h3>
-          <%= render goal.task.next_tasks %>
-        </div>
-      <% end %>
+      <%= render Goal.all %>
     </div>
   </div>
 </div>

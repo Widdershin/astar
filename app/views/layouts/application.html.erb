@@ -10,7 +10,7 @@
 
   <body>
     <header>
-      <span><b>Lodestar</b></span>
+      <span><b><%= link_to_unless_current("Lodestar", root_path) %></b></span>
 
       <% if notice.present? %>
         <span class="notice"><%= notice %></span>

@@ -17,6 +17,10 @@ header {
   padding: 10px;
 }
 
+header a:visited {
+  color: white;
+}
+
 .task {
   border: 1px solid #DDD;
   width: 300px;

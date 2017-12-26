@@ -1,10 +1,11 @@
 Rails.application.routes.draw do
+  resources :projects do
+    resources :goals
+  end
   devise_for :users
-  root to: "tasks#index"
-  resources :goals
+  root to: "projects#index"
   get 'dependencies/create'
 
-  root 'tasks#index'
   get '/tasks/search', to: 'tasks#search'
   post '/tasks/:id/complete', to: 'tasks#complete', as: 'complete_task'
   resources :tasks

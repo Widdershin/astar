@@ -11,4 +11,66 @@
 // about supported directives.
 //
 //= require rails-ujs
+
+function debounced(f, period) {
+  let lastTime = -Infinity;
+  let timeoutId;
+
+  return function() {
+    const now = performance.now();
+    const difference = now - lastTime;
+
+    if (difference > period) {
+      f.apply(null, arguments);
+    } else {
+      clearTimeout(timeoutId);
+
+      timeoutId = setTimeout(function() {
+        f.apply(null, arguments);
+
+        lastTime = now;
+      }, period);
+    }
+
+    lastTime = now;
+  }
+}
+
+
+function authenticityToken() {
+  return document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+}
+
+function fetching(action, args = {}) {
+  if (typeof args.headers !== 'object') {
+    args.headers = {};
+  }
+
+  const defaultHeaders = {
+    'X-Requested-With': 'XMLHttpRequest',
+    'X-CSRF-Token': authenticityToken(),
+    'Content-Type': 'application/json',
+    'Accept': 'application/json'
+  }
+
+  args.headers = Object.assign({}, defaultHeaders, args.headers);
+
+  if (!args.credentials) {
+    args.credentials = 'same-origin';
+  }
+
+  return fetch(action, args);
+}
+
+function fetchingHTML(action, args = {}) {
+  if (typeof args.headers !== 'object') {
+    args.headers = {};
+  }
+
+  args.headers['Content-Type'] = 'text/html';
+  args.headers['Accept'] = 'text/html';
+
+  return fetching(action, args);
+}
+
 //= require_tree .
