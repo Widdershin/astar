@@ -11,13 +11,21 @@
   <body>
     <header>
       <span><b>Lodestar</b></span>
-      <% if signed_in? %>
-        <span style="float: right;"> Signed in as <%= current_user.email %>
-      <% end %>
-    </header>
 
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+      <% if notice.present? %>
+        <span class="notice"><%= notice %></span>
+      <% end %>
+
+      <% if alert.present? %>
+        <span class="alert"><%= alert %></span>
+      <% end %>
+
+      <span>
+        <% if signed_in? %>
+          <%= current_user.email %> | <%= link_to("Logout", destroy_session_path(current_user), method: :DELETE) %>
+        <% end %>
+      </span>
+    </header>
 
     <%= yield %>
   </body>
