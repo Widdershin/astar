@@ -13,12 +13,12 @@
 //= require rails-ujs
 
 function debounced(f, period) {
-  let lastTime = -Infinity;
-  let timeoutId;
+  var lastTime = -Infinity;
+  var timeoutId;
 
   return function() {
-    const now = performance.now();
-    const difference = now - lastTime;
+    var now = performance.now();
+    var difference = now - lastTime;
 
     if (difference > period) {
       f.apply(null, arguments);
@@ -41,12 +41,12 @@ function authenticityToken() {
   return document.querySelector('meta[name="csrf-token"]').getAttribute("content");
 }
 
-function fetching(action, args = {}) {
+function fetching(action, args) {
   if (typeof args.headers !== 'object') {
     args.headers = {};
   }
 
-  const defaultHeaders = {
+  var defaultHeaders = {
     'X-Requested-With': 'XMLHttpRequest',
     'X-CSRF-Token': authenticityToken(),
     'Content-Type': 'application/json',
@@ -62,7 +62,7 @@ function fetching(action, args = {}) {
   return fetch(action, args);
 }
 
-function fetchingHTML(action, args = {}) {
+function fetchingHTML(action, args) {
   if (typeof args.headers !== 'object') {
     args.headers = {};
   }
