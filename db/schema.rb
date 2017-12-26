@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171226021808) do
+ActiveRecord::Schema.define(version: 20171226045428) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,11 +25,11 @@ ActiveRecord::Schema.define(version: 20171226021808) do
 
   create_table "goals", force: :cascade do |t|
     t.string "create"
-    t.bigint "task_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "project_id", null: false
-    t.index ["task_id"], name: "index_goals_on_task_id"
+    t.string "name", null: false
+    t.string "description", default: "", null: false
   end
 
   create_table "projects", force: :cascade do |t|
@@ -37,6 +37,15 @@ ActiveRecord::Schema.define(version: 20171226021808) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.integer "user_id", null: false
+  end
+
+  create_table "requirements", force: :cascade do |t|
+    t.bigint "task_id"
+    t.bigint "goal_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["goal_id"], name: "index_requirements_on_goal_id"
+    t.index ["task_id"], name: "index_requirements_on_task_id"
   end
 
   create_table "tasks", force: :cascade do |t|

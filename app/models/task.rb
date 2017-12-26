@@ -9,6 +9,9 @@ module Enumerable
 end
 
 class Task < ApplicationRecord
+  has_many :requirements
+  has_many :goals, through: :requirements
+
   has_many :dependencies, :foreign_key => :resolved_task_id
   has_many :dependents, class_name: 'Dependency', :foreign_key => :dependent_task_id
 

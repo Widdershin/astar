@@ -42,6 +42,7 @@ function authenticityToken() {
 }
 
 function fetching(action, args) {
+  if (!args) { args = {} };
   if (typeof args.headers !== 'object') {
     args.headers = {};
   }
@@ -63,6 +64,7 @@ function fetching(action, args) {
 }
 
 function fetchingHTML(action, args) {
+  if (!args) { args = {} };
   if (typeof args.headers !== 'object') {
     args.headers = {};
   }
