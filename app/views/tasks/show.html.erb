@@ -43,7 +43,7 @@ window.search.addEventListener('input', debounced(function (ev) {
     return
   };
 
-  const request = fetch('/tasks/search?q=' + window.search.value);
+  const request = fetch('/tasks/search?q=' + window.search.value, {credentials: 'same-origin'});
 
   // TODO - fix this shit
   request.then(response => response.json()).then(function(results) {
@@ -61,9 +61,7 @@ window.search.addEventListener('input', debounced(function (ev) {
       div.appendChild(button);
 
       button.addEventListener('click', function () {
-        const headers = new Headers();
-
-        headers.append("X-CSRF-Token", "<%= form_authenticity_token %>");
+        const form = document.createElement('form');
 
         const request = fetch("/dependencies", {
           method: "POST",
@@ -91,7 +89,7 @@ window.search.addEventListener('input', debounced(function (ev) {
 }, 150));
 </script>
 
-<%= render task.dependency_tasks %>
+<%= render task.dependency_tasks.order(:completed) %>
 
 <h2>Dependents</h2>
 
