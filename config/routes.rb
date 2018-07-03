@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   root to: "projects#index"
   get 'dependencies/create'
 
+  get '/projects/:project_id/goals/:goal_id/graph', to: 'goals#graph'
   get '/tasks/search', to: 'tasks#search'
   post '/tasks/:id/complete', to: 'tasks#complete', as: 'complete_task'
   resources :tasks

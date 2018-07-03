@@ -1,0 +1,25 @@
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: #111;
+  color: #f0f0e6;
+}
+
+
+.lodestar {
+  display: flex;
+
+}
+
+.focus {
+  background: #f0f0e6;
+  color: #111;
+  width: 100%;
+
+  padding: 10px;
+}
+
+.focus h2 {
+  margin: 0px;
+}

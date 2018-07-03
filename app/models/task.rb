@@ -39,6 +39,32 @@ class Task < ApplicationRecord
     end
   end
 
+  def as_json(*args)
+    super(*args).merge({dependency_count: dependency_count})
+  end
+
+  def graph
+    {
+      :nodes => nodes,
+      :edges => edges
+    }
+  end
+
+  def edges
+    [
+      dependencies.map { |d| { from: d.dependent_task_id, to: d.resolved_task_id } },
+      dependency_tasks.map(&:edges),
+    ].flatten.uniq
+  end
+
+  def nodes
+    if dependency_count == 0
+      [self]
+    end
+
+    ([self] + dependency_tasks.flat_map(&:nodes)).uniq
+  end
+
   def dependency_count
     if dependency_tasks.incomplete.empty?
       0
